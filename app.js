@@ -2,11 +2,12 @@ function Trainer(xArray, yArray) {
     this.xArr = xArray;
     this.yArr = yArray;
     this.points = this.xArr.length;
-    this.learnc = 0.00001;
+    this.learnc = 0.000001;
     this.weight = 0;
     this.bias = 1;
     this.cost;
 
+    // Cost Function
     this.costError = function () {
         total = 0;
         for (let i = 0; i < this.points; i++) {
@@ -14,6 +15,16 @@ function Trainer(xArray, yArray) {
         }
         return total / this.points;
     }
+
+    // Train Function
+    this.train = function (iter) {
+        for (let i = 0; i < iter; i++) {
+            this.updateWeights();
+        }
+        this.cost = this.costError();
+    }
+
+    // Update Weights Function
     this.updateWeights = function () {
         let wx;
         let w_deriv = 0;
@@ -26,3 +37,5 @@ function Trainer(xArray, yArray) {
         this.weight -= (w_deriv / this.points) * this.learnc;
         this.bias -= (b_deriv / this.points) * this.learnc;
     }
+
+} // End Trainer Object
